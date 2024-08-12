@@ -72,9 +72,9 @@ jobs:
           curl https://$FQDN/ui
           sed -i "s,http://localhost:5000,https://$FQDN,g" $GITHUB_WORKSPACE/openapi_specs/openapi3.yml
 
-sonarqube:
+  sonarqube:
     needs: test
-    if: false
+    if: true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -100,7 +100,7 @@ sonarqube:
           name: sonarqube-report
           path: sonarqube-report.json    
 
-    build:
+  build:
       needs: sonarqube
       runs-on: ubuntu-latest
       steps:
@@ -123,7 +123,7 @@ sonarqube:
             push: true
             tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-labs:latest
 
-    submit_results:
+  submit_results:
     needs: [build]
     if: true
     runs-on: ubuntu-latest
