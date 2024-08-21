@@ -189,6 +189,7 @@ jobs:
 
   build:
     needs: [test, sonarqube, dast, image-scan, security_gate]
+    if: true
     runs-on: ubuntu-latest
     steps:
       -
@@ -231,8 +232,8 @@ jobs:
             path: ${{github.workspace}}
         - name: Upload reports
           env:
-           SUBMIT_USER: ${{ secrets.SUBMIT_USER }}
-           SUBMIT_PASS: ${{ secrets.SUBMIT_PASS }}
+            SUBMIT_USER: ${{ secrets.SUBMIT_USER }}
+            SUBMIT_PASS: ${{ secrets.SUBMIT_PASS }}
           run: |
             WEEK1_CONTAINER=$(curl -X POST -H "Authorization: Bearer $AZURE_ACCESS_TOKEN" -d "$DOCKERHUB_USERNAME/devops-labs" https://devsecops-ver.azurewebsites.net/api/week1-container)
             echo "Week1 container upload: $WEEK1_CONTAINER"
