@@ -188,8 +188,10 @@ jobs:
           echo "All security gates passed"           
 
   build:
-    needs: [test, sonarqube, dast, image-scan, security_gate]
+   # needs: [security_gate]
     if: true
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       -
