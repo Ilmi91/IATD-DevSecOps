@@ -189,7 +189,7 @@ jobs:
 
   build:
     needs: security_gate
-    if: true
+    if: false
     permissions:
       id-token: write
     runs-on: ubuntu-latest
@@ -226,7 +226,7 @@ jobs:
 
       
   submit_reports:
-    needs: [sonarqube, dast, image-scan]
+    needs: [build]
     if: true
     runs-on: ubuntu-latest
     steps:
