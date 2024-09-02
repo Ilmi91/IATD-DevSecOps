@@ -189,7 +189,7 @@ jobs:
 
   build:
     needs: [sonarqube, dast, image-scan]
-    if: false
+    if: true
     permissions:
       id-token: write
     runs-on: ubuntu-latest
