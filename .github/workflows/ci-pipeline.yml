@@ -100,6 +100,7 @@ jobs:
           echo "TEST_APP_URL=https://$FQDN" 
           curl https://$FQDN/ui
           sed -i "s,http://localhost:5000,https://$FQDN,g" $GITHUB_WORKSPACE/openapi_specs/openapi3.yml
+      
       - name: ZAP Scan
         uses: zaproxy/action-api-scan@v0.6.0
         with:
@@ -185,6 +186,7 @@ jobs:
           fi
           
           echo "All security gates passed"           
+  
   build:
     needs: [sonarqube, dast, image-scan]
     if: true
@@ -222,6 +224,7 @@ jobs:
         run: |
             cosign sign --yes ${IMAGE}
       
+  
   submit_reports:
     needs: build
     if: true
@@ -270,5 +273,6 @@ jobs:
           
           WEEK5_RESPONSE=$(curl -X POST  -H "Authorization: Bearer $AZURE_ACCESS_TOKEN"  -d "$IMAGE" https://devsecops-ver.azurewebsites.net/api/week5-report)
           echo "Week5 report upload: $WEEK5_RESPONSE"
+         
           MODEL_RESPONSE=$(curl -X POST -H "Authorization: Bearer $AZURE_ACCESS_TOKEN" --data-binary @$GITHUB_WORKSPACE/threat-model/ci-pipeline.json https://devsecops-ver.azurewebsites.net/api/week6-report)
           echo "Model report upload: $MODEL_RESPONSE"
