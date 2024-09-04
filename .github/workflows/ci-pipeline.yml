@@ -234,6 +234,7 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Azure CLI script
         id: token-gen
         uses: azure/CLI@v1
